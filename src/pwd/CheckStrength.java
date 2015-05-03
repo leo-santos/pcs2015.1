@@ -5,12 +5,23 @@
  */
 package pwd;
 
+import java.util.logging.Logger;
+
+
+
+
+
 
 /**
  * Check strength of a password string
  * 
  */
 public class CheckStrength {
+
+    /**
+     *
+     */
+    
 
 	public enum LEVEL {
 		EASY, MIDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
@@ -51,7 +62,7 @@ public class CheckStrength {
 	 * 
 	 * @param passwd
 	 * @param type
-	 * @return
+	 * @return quantity of occurence of a kind of letter
 	 */
 	private static int countLetter(String passwd, int type) {
 		int count = 0;
@@ -64,7 +75,24 @@ public class CheckStrength {
 		}
 		return count;
 	}
-
+        
+         /**
+	 * Verifying if the string is empty
+	 * 
+	 * @param passwd
+	 * @return
+	 */
+        private static void checkPasswordEmpty(String passwd) throws Exception{
+            if (StringUtils.equalsNull(passwd)) {
+			throw new Exception();
+		}
+        }
+        
+        
+        private static void logError(Exception e) {
+            Logger.getLogger(e.getMessage());
+        }
+        
 	/**
 	 * verifying the password strength, increasing or decreasing security level password
 	 * 
@@ -72,9 +100,12 @@ public class CheckStrength {
 	 * @return strength level
 	 */
 	public static int checkPasswordStrength(String passwd) {
-		if (StringUtils.equalsNull(passwd)) {
-			throw new IllegalArgumentException("password is empty");
-		}
+		try{ 
+                    checkPasswordEmpty(passwd);
+                }
+                catch(Exception e){
+                    logError(e);
+                }
 		int len = passwd.length();
 		int level = 0;
 
