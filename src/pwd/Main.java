@@ -10,8 +10,8 @@ public class Main {
 		String passwd = "2hAj5#mne-ix.86H";
                 String pass = null;		
                 System.out.println(CheckStrength.checkPasswordStrength(passwd));
-                System.out.println(CheckStrength.checkPasswordStrength("000"));
-               // System.out.println(CheckStrength.checkPasswordStrength(pass));
+                System.out.println(CheckStrength.checkPasswordStrength("0"));
+                //System.out.println(CheckStrength.checkPasswordStrength(pass));
 	}
 
 }

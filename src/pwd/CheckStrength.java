@@ -79,11 +79,11 @@ public class CheckStrength {
          /**
 	 * Verifying if the string is empty
 	 * 
-	 * @param passwd
+	 * @param password
 	 * @return
 	 */
-        private static void checkPasswordEmpty(String passwd) throws Exception{
-            if (StringUtils.equalsNull(passwd)) {
+        private static void checkPasswordEmpty(String password) throws Exception{
+            if (StringUtils.equalsNull(password)) {
 			throw new Exception();
 		}
         }
@@ -93,86 +93,79 @@ public class CheckStrength {
             Logger.getLogger(e.getMessage());
         }
         
-	/**
-	 * verifying the password strength, increasing or decreasing security level password
+        
+        /**
+	 *  Increase points of security of password based on some patterns
 	 * 
-	 * @param passwd
-	 * @return strength level
+	 * @param password
+	 * @return
 	 */
-	public static int checkPasswordStrength(String passwd) {
-		try{ 
-                    checkPasswordEmpty(passwd);
-                }
-                catch(Exception e){
-                    logError(e);
-                }
-		int len = passwd.length();
+	private static int increasePoints(String password){
+            int len = password.length();
 		int level = 0;
-
-		// increase points
-		if (countLetter(passwd, NUM) > 0) {
+            if (countLetter(password, NUM) > 0) {
 			level++;
 		}
-		if (countLetter(passwd, SMALL_LETTER) > 0) {
+		if (countLetter(password, SMALL_LETTER) > 0) {
 			level++;
 		}
-		if (len > 4 && countLetter(passwd, CAPITAL_LETTER) > 0) {
+		if (len > 4 && countLetter(password, CAPITAL_LETTER) > 0) {
 			level++;
 		}
-		if (len > 6 && countLetter(passwd, OTHER_CHAR) > 0) {
-			level++;
-		}
-
-		if (len > 4 && countLetter(passwd, NUM) > 0 && countLetter(passwd, SMALL_LETTER) > 0
-				|| countLetter(passwd, NUM) > 0 && countLetter(passwd, CAPITAL_LETTER) > 0
-				|| countLetter(passwd, NUM) > 0 && countLetter(passwd, OTHER_CHAR) > 0
-				|| countLetter(passwd, SMALL_LETTER) > 0 && countLetter(passwd, CAPITAL_LETTER) > 0
-				|| countLetter(passwd, SMALL_LETTER) > 0 && countLetter(passwd, OTHER_CHAR) > 0
-				|| countLetter(passwd, CAPITAL_LETTER) > 0 && countLetter(passwd, OTHER_CHAR) > 0) {
+		if (len > 6 && countLetter(password, OTHER_CHAR) > 0) {
 			level++;
 		}
 
-		if (len > 6 && countLetter(passwd, NUM) > 0 && countLetter(passwd, SMALL_LETTER) > 0
-				&& countLetter(passwd, CAPITAL_LETTER) > 0 || countLetter(passwd, NUM) > 0
-				&& countLetter(passwd, SMALL_LETTER) > 0 && countLetter(passwd, OTHER_CHAR) > 0
-				|| countLetter(passwd, NUM) > 0 && countLetter(passwd, CAPITAL_LETTER) > 0
-				&& countLetter(passwd, OTHER_CHAR) > 0 || countLetter(passwd, SMALL_LETTER) > 0
-				&& countLetter(passwd, CAPITAL_LETTER) > 0 && countLetter(passwd, OTHER_CHAR) > 0) {
+		if (len > 4 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
+				|| countLetter(password, NUM) > 0 && countLetter(password, CAPITAL_LETTER) > 0
+				|| countLetter(password, NUM) > 0 && countLetter(password, OTHER_CHAR) > 0
+				|| countLetter(password, SMALL_LETTER) > 0 && countLetter(password, CAPITAL_LETTER) > 0
+				|| countLetter(password, SMALL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0
+				|| countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
 			level++;
 		}
 
-		if (len > 8 && countLetter(passwd, NUM) > 0 && countLetter(passwd, SMALL_LETTER) > 0
-				&& countLetter(passwd, CAPITAL_LETTER) > 0 && countLetter(passwd, OTHER_CHAR) > 0) {
+		if (len > 6 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
+				&& countLetter(password, CAPITAL_LETTER) > 0 || countLetter(password, NUM) > 0
+				&& countLetter(password, SMALL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0
+				|| countLetter(password, NUM) > 0 && countLetter(password, CAPITAL_LETTER) > 0
+				&& countLetter(password, OTHER_CHAR) > 0 || countLetter(password, SMALL_LETTER) > 0
+				&& countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
 			level++;
 		}
 
-		if (len > 6 && countLetter(passwd, NUM) >= 3 && countLetter(passwd, SMALL_LETTER) >= 3
-				|| countLetter(passwd, NUM) >= 3 && countLetter(passwd, CAPITAL_LETTER) >= 3
-				|| countLetter(passwd, NUM) >= 3 && countLetter(passwd, OTHER_CHAR) >= 2
-				|| countLetter(passwd, SMALL_LETTER) >= 3 && countLetter(passwd, CAPITAL_LETTER) >= 3
-				|| countLetter(passwd, SMALL_LETTER) >= 3 && countLetter(passwd, OTHER_CHAR) >= 2
-				|| countLetter(passwd, CAPITAL_LETTER) >= 3 && countLetter(passwd, OTHER_CHAR) >= 2) {
+		if (len > 8 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
+				&& countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
 			level++;
 		}
 
-		if (len > 8 && countLetter(passwd, NUM) >= 2 && countLetter(passwd, SMALL_LETTER) >= 2
-				&& countLetter(passwd, CAPITAL_LETTER) >= 2 || countLetter(passwd, NUM) >= 2
-				&& countLetter(passwd, SMALL_LETTER) >= 2 && countLetter(passwd, OTHER_CHAR) >= 2
-				|| countLetter(passwd, NUM) >= 2 && countLetter(passwd, CAPITAL_LETTER) >= 2
-				&& countLetter(passwd, OTHER_CHAR) >= 2 || countLetter(passwd, SMALL_LETTER) >= 2
-				&& countLetter(passwd, CAPITAL_LETTER) >= 2 && countLetter(passwd, OTHER_CHAR) >= 2) {
+		if (len > 6 && countLetter(password, NUM) >= 3 && countLetter(password, SMALL_LETTER) >= 3
+				|| countLetter(password, NUM) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3
+				|| countLetter(password, NUM) >= 3 && countLetter(password, OTHER_CHAR) >= 2
+				|| countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3
+				|| countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2
+				|| countLetter(password, CAPITAL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2) {
 			level++;
 		}
 
-		if (len > 10 && countLetter(passwd, NUM) >= 2 && countLetter(passwd, SMALL_LETTER) >= 2
-				&& countLetter(passwd, CAPITAL_LETTER) >= 2 && countLetter(passwd, OTHER_CHAR) >= 2) {
+		if (len > 8 && countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2
+				&& countLetter(password, CAPITAL_LETTER) >= 2 || countLetter(password, NUM) >= 2
+				&& countLetter(password, SMALL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2
+				|| countLetter(password, NUM) >= 2 && countLetter(password, CAPITAL_LETTER) >= 2
+				&& countLetter(password, OTHER_CHAR) >= 2 || countLetter(password, SMALL_LETTER) >= 2
+				&& countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2) {
 			level++;
 		}
 
-		if (countLetter(passwd, OTHER_CHAR) >= 3) {
+		if (len > 10 && countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2
+				&& countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2) {
 			level++;
 		}
-		if (countLetter(passwd, OTHER_CHAR) >= 6) {
+
+		if (countLetter(password, OTHER_CHAR) >= 3) {
+			level++;
+		}
+		if (countLetter(password, OTHER_CHAR) >= 6) {
 			level++;
 		}
 
@@ -182,26 +175,35 @@ public class CheckStrength {
 				level++;
 			}
 		}
+            return level;
+        }
+        /**
+	 *  Decrease points of security of password based on some patterns
+	 * 
+	 * @param password
+	 * @return
+	 */
+        private static int decreasePoints(String password){
+            int len = password.length();
+		int level = 0;
+        if ("abcdefghijklmnopqrstuvwxyz".indexOf(password) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(password) > 0) {
+			level--;
+		}
+		if ("qwertyuiop".indexOf(password) > 0 || "asdfghjkl".indexOf(password) > 0 || "zxcvbnm".indexOf(password) > 0) {
+			level--;
+		}
+		if (StringUtils.isNumeric(password) && ("01234567890".indexOf(password) > 0 || "09876543210".indexOf(password) > 0)) {
+			level--;
+		}
 
-		// decrease points
-		if ("abcdefghijklmnopqrstuvwxyz".indexOf(passwd) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(passwd) > 0) {
-			level--;
-		}
-		if ("qwertyuiop".indexOf(passwd) > 0 || "asdfghjkl".indexOf(passwd) > 0 || "zxcvbnm".indexOf(passwd) > 0) {
-			level--;
-		}
-		if (StringUtils.isNumeric(passwd) && ("01234567890".indexOf(passwd) > 0 || "09876543210".indexOf(passwd) > 0)) {
-			level--;
-		}
-
-		if (countLetter(passwd, NUM) == len || countLetter(passwd, SMALL_LETTER) == len
-				|| countLetter(passwd, CAPITAL_LETTER) == len) {
+		if (countLetter(password, NUM) == len || countLetter(password, SMALL_LETTER) == len
+				|| countLetter(password, CAPITAL_LETTER) == len) {
 			level--;
 		}
 
 		if (len % 2 == 0) { // aaabbb
-			String part1 = passwd.substring(0, len / 2);
-			String part2 = passwd.substring(len / 2);
+			String part1 = password.substring(0, len / 2);
+			String part2 = password.substring(len / 2);
 			if (part1.equals(part2)) {
 				level--;
 			}
@@ -210,22 +212,22 @@ public class CheckStrength {
 			}
 		}
 		if (len % 3 == 0) { // ababab
-			String part1 = passwd.substring(0, len / 3);
-			String part2 = passwd.substring(len / 3, len / 3 * 2);
-			String part3 = passwd.substring(len / 3 * 2);
+			String part1 = password.substring(0, len / 3);
+			String part2 = password.substring(len / 3, len / 3 * 2);
+			String part3 = password.substring(len / 3 * 2);
 			if (part1.equals(part2) && part2.equals(part3)) {
 				level--;
 			}
 		}
 
-		if (StringUtils.isNumeric(passwd) && len >= 6) { // 19881010 or 881010
+		if (StringUtils.isNumeric(password) && len >= 6) { // 19881010 or 881010
 			int year = 0;
 			if (len == 8 || len == 6) {
-				year = Integer.parseInt(passwd.substring(0, len - 4));
+				year = Integer.parseInt(password.substring(0, len - 4));
 			}
 			int size = StringUtils.sizeOfInt(year);
-			int month = Integer.parseInt(passwd.substring(size, size + 2));
-			int day = Integer.parseInt(passwd.substring(size + 2, len));
+			int month = Integer.parseInt(password.substring(size, size + 2));
+			int day = Integer.parseInt(password.substring(size + 2, len));
 			if (year >= 1950 && year < 2050 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
 				level--;
 			}
@@ -233,7 +235,7 @@ public class CheckStrength {
 
 		if (null != DICTIONARY && DICTIONARY.length > 0) {// dictionary
 			for (int i = 0; i < DICTIONARY.length; i++) {
-				if (passwd.equals(DICTIONARY[i]) || DICTIONARY[i].indexOf(passwd) >= 0) {
+				if (password.equals(DICTIONARY[i]) || DICTIONARY[i].indexOf(password) >= 0) {
 					level--;
 					break;
 				}
@@ -250,7 +252,7 @@ public class CheckStrength {
 			}
 		}
 
-		if (StringUtils.isCharEqual(passwd)) {
+		if (StringUtils.isCharEqual(password)) {
 			level = 0;
 		}
 
@@ -259,6 +261,24 @@ public class CheckStrength {
 		}
 
 		return level;
+        }
+	/**
+	 * verifying the password strength, increasing or decreasing security level password
+	 * 
+	 * @param password
+	 * @return strength level
+	 */
+	public static int checkPasswordStrength(String password) {     
+		try{ 
+                    checkPasswordEmpty(password);
+                }
+                catch(Exception e){
+                    logError(e);
+                }
+                int increasePoints = increasePoints(password);
+		int decreasePoints = decreasePoints(password);
+                
+            return increasePoints-decreasePoints;
 	}
 
 	/**
