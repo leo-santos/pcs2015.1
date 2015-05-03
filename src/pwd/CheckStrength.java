@@ -1,27 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pwd;
 
 import java.util.logging.Logger;
-
-
-
-
-
 
 /**
  * Check strength of a password string
  * 
  */
 public class CheckStrength {
-
-    /**
-     *
-     */
-    
 
 	public enum LEVEL {
 		EASY, MIDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
@@ -93,6 +79,34 @@ public class CheckStrength {
             Logger.getLogger(e.getMessage());
         }
         
+        /**
+	 *  Verifying if the type exists on the string
+	 * 
+	 * @param password
+	 * @return
+	 */
+        private static int verifyPoints( String password, int type){   
+            if(countLetter(password, type)>0){
+                   return 1;
+               }
+            return 0;
+        }
+           /**
+	 *  Calculate points of security of password based on some patterns
+	 * 
+	 * @param password
+	 * @return
+         * 
+         */ 
+        private static int calculatePoints (String password){
+         int level=0;
+            level+=verifyPoints(password,NUM);
+	    level+=verifyPoints(password,SMALL_LETTER);
+            level+=verifyPoints(password,CAPITAL_LETTER);
+            level+=verifyPoints(password,OTHER_CHAR);
+            return level;
+	       }
+
         
         /**
 	 *  Increase points of security of password based on some patterns
@@ -102,19 +116,9 @@ public class CheckStrength {
 	 */
 	private static int increasePoints(String password){
             int len = password.length();
-		int level = 0;
-            if (countLetter(password, NUM) > 0) {
-			level++;
-		}
-		if (countLetter(password, SMALL_LETTER) > 0) {
-			level++;
-		}
-		if (len > 4 && countLetter(password, CAPITAL_LETTER) > 0) {
-			level++;
-		}
-		if (len > 6 && countLetter(password, OTHER_CHAR) > 0) {
-			level++;
-		}
+	    int level =0;
+            level=calculatePoints(password);
+		
 
 		if (len > 4 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
 				|| countLetter(password, NUM) > 0 && countLetter(password, CAPITAL_LETTER) > 0
