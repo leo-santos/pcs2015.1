@@ -30,17 +30,17 @@ public class CheckStrength {
 	/**
 	 * Check character's type, includes num, capital letter, small letter and other character.
 	 * 
-	 * @param c
+	 * @param letter
 	 * @return
 	 */
-	private static int checkCharacterType(char c) {
-		if (c >= 48 && c <= 57) {
+	private static int checkCharacterType(char letter) {
+		if (letter >= 48 && letter <= 57) {
 			return NUM;
 		}
-		if (c >= 65 && c <= 90) {
+		if (letter >= 65 && letter <= 90) {
 			return CAPITAL_LETTER;
 		}
-		if (c >= 97 && c <= 122) {
+		if (letter >= 97 && letter <= 122) {
 			return SMALL_LETTER;
 		}
 		return OTHER_CHAR;
@@ -56,8 +56,8 @@ public class CheckStrength {
 	private static int countLetter(String passwd, int type) {
 		int count = 0;
 		if (null != passwd && passwd.length() > 0) {
-			for (char c : passwd.toCharArray()) {
-				if (checkCharacterType(c) == type) {
+			for (char letter : passwd.toCharArray()) {
+				if (checkCharacterType(letter) == type) {
 					count++;
 				}
 			}
@@ -66,7 +66,7 @@ public class CheckStrength {
 	}
 
 	/**
-	 * Check password's strength
+	 * verifying the password strength, increasing or decreasing security level password
 	 * 
 	 * @param passwd
 	 * @return strength level
