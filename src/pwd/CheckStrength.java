@@ -22,7 +22,7 @@ public class CheckStrength {
 	 * Simple password dictionary
 	 */
 	private final static String[] DICTIONARY = { "password", "abc123", "iloveyou", "adobe123", "123123", "sunshine",
-			"1314520", "a1b2c3", "123qwe", "aaa111", "qweasd", "admin", "passwd" };
+			"1314520", "a1b2c3", "123qwe", "aaa111", "qweasd", "admin", "passwd","abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ" ,"qwertyuiop","asdfghjkl","zxcvbnm"};
 
 	/**
 	 * Check character's type, includes num, capital letter, small letter and other character.
@@ -48,7 +48,7 @@ public class CheckStrength {
 	 * 
 	 * @param passwd
 	 * @param type
-	 * @return quantity of occurence of a kind of letter
+	 * @return quantity of occurrence of a kind of letter
 	 */
 	private static int countLetter(String passwd, int type) {
 		int count = 0;
@@ -185,12 +185,7 @@ public class CheckStrength {
         private static int decreasePoints(String password){
             int len = password.length();
 		int level = 0;
-        if ("abcdefghijklmnopqrstuvwxyz".indexOf(password) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(password) > 0) {
-			level--;
-		}
-		if ("qwertyuiop".indexOf(password) > 0 || "asdfghjkl".indexOf(password) > 0 || "zxcvbnm".indexOf(password) > 0) {
-			level--;
-		}
+      
 		if (StringUtils.isNumeric(password) && ("01234567890".indexOf(password) > 0 || "09876543210".indexOf(password) > 0)) {
 			level--;
 		}
