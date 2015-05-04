@@ -48,7 +48,7 @@ public class CheckStrength {
 	 * 
 	 * @param passwd
 	 * @param type
-	 * @return quantity of occurrence of a kind of letter
+	 * @return quantity of occurence of a kind of letter
 	 */
 	private static int countLetter(String passwd, int type) {
 		int count = 0;
@@ -100,21 +100,10 @@ public class CheckStrength {
          */ 
         private static int calculatePoints (String password){
          int level=0;
-         int len = password.length();
             level+=verifyPoints(password,NUM);
 	    level+=verifyPoints(password,SMALL_LETTER);
             level+=verifyPoints(password,CAPITAL_LETTER);
             level+=verifyPoints(password,OTHER_CHAR);
-            if (len > 4 && level>2) {
-			level++;
-                }
-		if (len > 6 && level>3) {
-			level++;
-		}
-
-		if (len > 8 && level > 4 ) {
-			level++;
-		}
             return level;
 	       }
 
@@ -126,17 +115,40 @@ public class CheckStrength {
 	 * @return
 	 */
 	private static int increasePoints(String password){
-            
+            int len = password.length();
 	    int level =0;
             level=calculatePoints(password);
 		
-            int len = password.length();
-        if (len > 6 && countLetter(password, NUM) >= 3 && countLetter(password, SMALL_LETTER) >= 3 
-                    || countLetter(password, NUM) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3 
-                    || countLetter(password, NUM) >= 3 && countLetter(password, OTHER_CHAR) >= 2
-                    || countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3 
-                    || countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2
-                    || countLetter(password, CAPITAL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2) {
+
+		if (len > 4 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
+				|| countLetter(password, NUM) > 0 && countLetter(password, CAPITAL_LETTER) > 0
+				|| countLetter(password, NUM) > 0 && countLetter(password, OTHER_CHAR) > 0
+				|| countLetter(password, SMALL_LETTER) > 0 && countLetter(password, CAPITAL_LETTER) > 0
+				|| countLetter(password, SMALL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0
+				|| countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
+			level++;
+		}
+
+		if (len > 6 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
+				&& countLetter(password, CAPITAL_LETTER) > 0 || countLetter(password, NUM) > 0
+				&& countLetter(password, SMALL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0
+				|| countLetter(password, NUM) > 0 && countLetter(password, CAPITAL_LETTER) > 0
+				&& countLetter(password, OTHER_CHAR) > 0 || countLetter(password, SMALL_LETTER) > 0
+				&& countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
+			level++;
+		}
+
+		if (len > 8 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
+				&& countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
+			level++;
+		}
+
+		if (len > 6 && countLetter(password, NUM) >= 3 && countLetter(password, SMALL_LETTER) >= 3
+				|| countLetter(password, NUM) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3
+				|| countLetter(password, NUM) >= 3 && countLetter(password, OTHER_CHAR) >= 2
+				|| countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3
+				|| countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2
+				|| countLetter(password, CAPITAL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2) {
 			level++;
 		}
 

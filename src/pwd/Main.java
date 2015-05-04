@@ -11,13 +11,6 @@ public class Main {
                 String pass = null;		
                 System.out.println(CheckStrength.checkPasswordStrength(passwd));
                 System.out.println(CheckStrength.checkPasswordStrength("0"));
-                System.out.println(CheckStrength.checkPasswordStrength("00aa"));
-                System.out.println(CheckStrength.checkPasswordStrength("0aaaQ"));
-                System.out.println(CheckStrength.checkPasswordStrength("2371213278123"));
-                System.out.println(CheckStrength.checkPasswordStrength("00aahd73hed2d2uyu"));
-                System.out.println(CheckStrength.checkPasswordStrength("0aaaQ9sd9u29d9H9WDx"));
-                System.out.println(CheckStrength.checkPasswordStrength("0aaaQ9sd9u2#9d9H9WDx."));
-                System.out.println(CheckStrength.checkPasswordStrength("0@H9WDx"));
                 //System.out.println(CheckStrength.checkPasswordStrength(pass));
 	}
 
