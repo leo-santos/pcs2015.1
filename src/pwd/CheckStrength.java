@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class CheckStrength {
 
 	public enum LEVEL {
-		EASY, MIDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
+		EASY, MEDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
 	}
 
 	private static final int NUM = 1;
@@ -154,12 +154,10 @@ public class CheckStrength {
 			level++;
 		}
 
-		if (len > 8 && countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2
-				&& countLetter(password, CAPITAL_LETTER) >= 2 || countLetter(password, NUM) >= 2
-				&& countLetter(password, SMALL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2
-				|| countLetter(password, NUM) >= 2 && countLetter(password, CAPITAL_LETTER) >= 2
-				&& countLetter(password, OTHER_CHAR) >= 2 || countLetter(password, SMALL_LETTER) >= 2
-				&& countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2) {
+		if (len > 8 && countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2 && countLetter(password, CAPITAL_LETTER) >= 2 
+                            || countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2
+                            || countLetter(password, NUM) >= 2 && countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2 
+                            || countLetter(password, SMALL_LETTER) >= 2	&& countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2) {
 			level++;
 		}
 
@@ -283,7 +281,7 @@ public class CheckStrength {
 	}
 
 	/**
-	 * Get password strength level, includes easy, midium, strong, very strong, extremely strong
+	 * Get password strength level, includes easy, medium, strong, very strong, extremely strong
 	 * 
 	 * @param passwd
 	 * @return
@@ -299,7 +297,7 @@ public class CheckStrength {
 			case 4:
 			case 5:
 			case 6:
-				return LEVEL.MIDIUM;
+				return LEVEL.MEDIUM;
 			case 7:
 			case 8:
 			case 9:
