@@ -78,12 +78,28 @@ public class CheckStrength {
         private static void logError(Exception e) {
             Logger.getLogger(e.getMessage());
         }
-        
+        /**
+	 *  Calculate  points of security of password based on password's length
+	 * 
+	 * @param password
+	 * @return level
+	 */
+        private static int calculateLenghtPoints(String password){
+            int len = password.length();
+            int level=0;
+            if (len > 12) {
+			level++;
+			if (len >= 16) {
+				level++;
+			}
+		}
+            return level;
+        }
         /**
 	 *  Verifying if the type exists on the string
 	 * 
 	 * @param password
-	 * @return
+	 * @return level
 	 */
         private static int verifyPoints( String password, int type){   
             if(countLetter(password, type)>0){
@@ -95,15 +111,26 @@ public class CheckStrength {
 	 *  Calculate points of security of password based on some patterns
 	 * 
 	 * @param password
-	 * @return
+	 * @return level
          * 
          */ 
         private static int calculatePoints (String password){
          int level=0;
+            int len = password.length();
             level+=verifyPoints(password,NUM);
 	    level+=verifyPoints(password,SMALL_LETTER);
             level+=verifyPoints(password,CAPITAL_LETTER);
             level+=verifyPoints(password,OTHER_CHAR);
+            if (len > 4 && level>2) {
+			level++;
+		}
+		if (len > 6 && level>3) {
+			level++;
+		}
+		if (len > 8 && level>4) {
+			level++;
+		}
+                level+=calculateLenghtPoints(password);
             return level;
 	       }
 
@@ -112,37 +139,12 @@ public class CheckStrength {
 	 *  Increase points of security of password based on some patterns
 	 * 
 	 * @param password
-	 * @return
+	 * @return level
 	 */
 	private static int increasePoints(String password){
-            int len = password.length();
 	    int level =0;
             level=calculatePoints(password);
-		
-
-		if (len > 4 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
-				|| countLetter(password, NUM) > 0 && countLetter(password, CAPITAL_LETTER) > 0
-				|| countLetter(password, NUM) > 0 && countLetter(password, OTHER_CHAR) > 0
-				|| countLetter(password, SMALL_LETTER) > 0 && countLetter(password, CAPITAL_LETTER) > 0
-				|| countLetter(password, SMALL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0
-				|| countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
-			level++;
-		}
-
-		if (len > 6 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
-				&& countLetter(password, CAPITAL_LETTER) > 0 || countLetter(password, NUM) > 0
-				&& countLetter(password, SMALL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0
-				|| countLetter(password, NUM) > 0 && countLetter(password, CAPITAL_LETTER) > 0
-				&& countLetter(password, OTHER_CHAR) > 0 || countLetter(password, SMALL_LETTER) > 0
-				&& countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
-			level++;
-		}
-
-		if (len > 8 && countLetter(password, NUM) > 0 && countLetter(password, SMALL_LETTER) > 0
-				&& countLetter(password, CAPITAL_LETTER) > 0 && countLetter(password, OTHER_CHAR) > 0) {
-			level++;
-		}
-
+	    int len = password.length();
 		if (len > 6 && countLetter(password, NUM) >= 3 && countLetter(password, SMALL_LETTER) >= 3
 				|| countLetter(password, NUM) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3
 				|| countLetter(password, NUM) >= 3 && countLetter(password, OTHER_CHAR) >= 2
@@ -173,19 +175,14 @@ public class CheckStrength {
 			level++;
 		}
 
-		if (len > 12) {
-			level++;
-			if (len >= 16) {
-				level++;
-			}
-		}
+		
             return level;
         }
         /**
 	 *  Decrease points of security of password based on some patterns
 	 * 
 	 * @param password
-	 * @return
+	 * @return level
 	 */
         private static int decreasePoints(String password){
             int len = password.length();
