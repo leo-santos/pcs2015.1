@@ -121,13 +121,13 @@ public class CheckStrength {
 	    level+=verifyPoints(password,SMALL_LETTER);
             level+=verifyPoints(password,CAPITAL_LETTER);
             level+=verifyPoints(password,OTHER_CHAR);
-            if (len > 4 && level>2) {
+            if (len > 4 && level>=2) {
 			level++;
 		}
-		if (len > 6 && level>3) {
+		if (len > 6 && level>=3) {
 			level++;
 		}
-		if (len > 8 && level>4) {
+		if (len > 8 && level>=4) {
 			level++;
 		}
                 level+=calculateLenghtPoints(password);
@@ -187,22 +187,22 @@ public class CheckStrength {
 		int level = 0;
       
 		if (StringUtils.isNumeric(password) && ("01234567890".indexOf(password) > 0 || "09876543210".indexOf(password) > 0)) {
-			level--;
+			level++;
 		}
 
 		if (countLetter(password, NUM) == len || countLetter(password, SMALL_LETTER) == len
 				|| countLetter(password, CAPITAL_LETTER) == len) {
-			level--;
+			level++;
 		}
 
 		if (len % 2 == 0) { // aaabbb
 			String part1 = password.substring(0, len / 2);
 			String part2 = password.substring(len / 2);
 			if (part1.equals(part2)) {
-				level--;
+				level++;
 			}
 			if (StringUtils.isCharEqual(part1) && StringUtils.isCharEqual(part2)) {
-				level--;
+				level++;
 			}
 		}
 		if (len % 3 == 0) { // ababab
@@ -210,7 +210,7 @@ public class CheckStrength {
 			String part2 = password.substring(len / 3, len / 3 * 2);
 			String part3 = password.substring(len / 3 * 2);
 			if (part1.equals(part2) && part2.equals(part3)) {
-				level--;
+				level++;
 			}
 		}
 
@@ -223,36 +223,36 @@ public class CheckStrength {
 			int month = Integer.parseInt(password.substring(size, size + 2));
 			int day = Integer.parseInt(password.substring(size + 2, len));
 			if (year >= 1950 && year < 2050 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-				level--;
+				level++;
 			}
 		}
 
 		if (null != DICTIONARY && DICTIONARY.length > 0) {// dictionary
 			for (int i = 0; i < DICTIONARY.length; i++) {
 				if (password.equals(DICTIONARY[i]) || DICTIONARY[i].indexOf(password) >= 0) {
-					level--;
+					level++;
 					break;
 				}
 			}
 		}
 
 		if (len <= 6) {
-			level--;
+			level++;
 			if (len <= 4) {
-				level--;
+				level++;
 				if (len <= 3) {
-					level = 0;
+					level = -1;
 				}
 			}
 		}
 
 		if (StringUtils.isCharEqual(password)) {
-			level = 0;
+			level = -1;
 		}
 
-		if (level < 0) {
-			level = 0;
-		}
+		//if (level < 0) {
+		//	level = 0;
+		//}
 
 		return level;
         }
@@ -271,7 +271,9 @@ public class CheckStrength {
                 }
                 int increasePoints = increasePoints(password);
 		int decreasePoints = decreasePoints(password);
-                
+                if( decreasePoints <0 || increasePoints-decreasePoints<0){
+                    return 0;
+                }                
             return increasePoints-decreasePoints;
 	}
 
