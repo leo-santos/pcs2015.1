@@ -31,13 +31,13 @@ public class CheckStrength {
 	 * @return
 	 */
 	private static int checkCharacterType(char letter) {
-		if (Character.isDigit(character)) {
+		if (Character.isDigit(letter)) {
         		 return NUM;
         	}
-        	if (Character.isUpperCase(character)) {
+        	if (Character.isUpperCase(letter)) {
             		return CAPITAL_LETTER;
         	}
-        	if (Character.isLowerCase(character)) {
+        	if (Character.isLowerCase(letter)) {
             		return SMALL_LETTER;
         	}
            	return OTHER_CHAR;
