@@ -31,16 +31,16 @@ public class CheckStrength {
 	 * @return
 	 */
 	private static int checkCharacterType(char letter) {
-		if (letter >= 48 && letter <= 57) {
-			return NUM;
-		}
-		if (letter >= 65 && letter <= 90) {
-			return CAPITAL_LETTER;
-		}
-		if (letter >= 97 && letter <= 122) {
-			return SMALL_LETTER;
-		}
-		return OTHER_CHAR;
+		if (Character.isDigit(character)) {
+        		 return NUM;
+        	}
+        	if (Character.isUpperCase(character)) {
+            		return CAPITAL_LETTER;
+        	}
+        	if (Character.isLowerCase(character)) {
+            		return SMALL_LETTER;
+        	}
+           	return OTHER_CHAR;
 	}
 
 	/**
