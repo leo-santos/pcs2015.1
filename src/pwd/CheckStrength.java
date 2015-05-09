@@ -1,4 +1,3 @@
-
 package pwd;
 
 import java.util.logging.Logger;
