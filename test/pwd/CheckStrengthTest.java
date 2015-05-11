@@ -196,7 +196,7 @@ public class CheckStrengthTest {
     public void testCheckPasswordStrengthWith2PartsSameLetter() {
         System.out.println("checkPasswordStrength");
         String passwd = "aaaBBB";
-        int expResult = 2;
+        int expResult = 1;
         int result = CheckStrength.checkPasswordStrength(passwd);
         assertEquals(expResult, result);
 
@@ -236,7 +236,7 @@ public class CheckStrengthTest {
     public void testCheckPasswordStrengthFromDictionary() {
         System.out.println("checkPasswordStrength");
         String passwd = "adobe12";
-        int expResult = 3;
+        int expResult = 2;
         int result = CheckStrength.checkPasswordStrength(passwd);
         assertEquals(expResult, result);
 

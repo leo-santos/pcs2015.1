@@ -16,6 +16,7 @@ public class CheckStrength {
 	private static final int SMALL_LETTER = 2;
 	private static final int CAPITAL_LETTER = 3;
 	private static final int OTHER_CHAR = 4;
+        private static final int [] LETTERS= {1,2,3,4};
 
 	/**
 	 * Simple password dictionary
@@ -100,11 +101,20 @@ public class CheckStrength {
 	 * @param password
 	 * @return level
 	 */
-        private static int verifyPoints( String password, int type){   
+        private static int verifyPoints( String password, int type){  
+            int level=0;
             if(countLetter(password, type)>0){
-                   return 1;
+                   level++;
                }
-            return 0;
+            if(type==OTHER_CHAR){
+                if (countLetter(password, OTHER_CHAR) >= 3) {
+                            level++;
+                    }
+                    if (countLetter(password, OTHER_CHAR) >= 6) {
+			level++;
+                    }   
+                }
+            return level;
         }
            /**
 	 *  Calculate points of security of password based on some patterns
@@ -114,23 +124,24 @@ public class CheckStrength {
          * 
          */ 
         private static int calculatePoints (String password){
-         int level=0;
+         int level=0,level_real=0;
             int len = password.length();
             level+=verifyPoints(password,NUM);
 	    level+=verifyPoints(password,SMALL_LETTER);
             level+=verifyPoints(password,CAPITAL_LETTER);
             level+=verifyPoints(password,OTHER_CHAR);
+            level_real=level;
             if (len > 4 && level>=2) {
-			level++;
+			level_real++;
 		}
 		if (len > 6 && level>=3) {
-			level++;
+			level_real++;
 		}
 		if (len > 8 && level>=4) {
-			level++;
+			level_real++;
 		}
-                level+=calculateLenghtPoints(password);
-            return level;
+                level_real+=calculateLenghtPoints(password);
+            return level_real;
 	       }
 
         
@@ -165,12 +176,7 @@ public class CheckStrength {
 			level++;
 		}
 
-		if (countLetter(password, OTHER_CHAR) >= 3) {
-			level++;
-		}
-		if (countLetter(password, OTHER_CHAR) >= 6) {
-			level++;
-		}
+		
 
 		
             return level;

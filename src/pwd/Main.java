@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		String passwd = "2hAj5#mne-ix.86H";		
-                System.out.println(CheckStrength.getPasswordLevel("adobe12"));
+                System.out.println(CheckStrength.getPasswordLevel("aaaBBB"));
                 /*System.out.println(CheckStrength.getPasswordLevel(passwd));
                 System.out.println(CheckStrength.getPasswordLevel("0"));
                 System.out.println(CheckStrength.getPasswordLevel("00aa"));
