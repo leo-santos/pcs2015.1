@@ -54,7 +54,7 @@ public class StringUtils {
 	 */
 	public static boolean equalsNull(String word) {
 		int strLen;
-		if (word == null || (strLen = word.length()) == 0 || word.equalsIgnoreCase("null")) {
+		if (word == null || (strLen = word.length()) == 0 ) {
 			return true;
 		}
 		for (int i = 0; i < strLen; i++) {

@@ -236,7 +236,7 @@ public class CheckStrengthTest {
     public void testCheckPasswordStrengthFromDictionary() {
         System.out.println("checkPasswordStrength");
         String passwd = "adobe12";
-        int expResult = 2;
+        int expResult = 3;
         int result = CheckStrength.checkPasswordStrength(passwd);
         assertEquals(expResult, result);
 
@@ -275,6 +275,20 @@ public class CheckStrengthTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         
+    }
+
+    /**
+     * Test of checkPasswordStrength method, of class CheckStrength.
+     */
+    @Test(expected=NullPointerException.class)
+    public void testCheckPasswordStrength() {
+        System.out.println("checkPasswordStrength");
+        String password = "";
+        int expResult = 0;
+        int result = CheckStrength.checkPasswordStrength(password);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }
