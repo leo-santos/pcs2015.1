@@ -37,20 +37,7 @@ public class CheckStrengthTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of countLetter method, of class CheckStrength.
-     */
-    @Test
-    public void testCountLetter() {
-        System.out.println("countLetter");
-        String passwd = "123456ab";
-        int type = CheckStrength.NUM;
-        int expResult = 6;
-        int result = CheckStrength.countLetter(passwd, type);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-       
-    }
+    
 
      @Test(expected=Exception.class)
     public void testCheckPasswordStrengthWithException() {
@@ -59,6 +46,20 @@ public class CheckStrengthTest {
         CheckStrength.checkPasswordStrength(passwd);
         // TODO review the generated test code and remove the default call to fail.
         
+    }
+    
+    @Test
+    public void testCheckntLetter() {
+        System.out.println("checkPasswordStrength");
+        String passwd = "123456ab";
+        int [] type = CheckStrength.LETTERS;
+        int [] expResult = {6,2,0,0};
+        int [] result = CheckStrength.countLetter(passwd,type);
+        assertEquals(expResult[0], result[0]);
+        assertEquals(expResult[1], result[1]);
+        assertEquals(expResult[2], result[2]);
+        assertEquals(expResult[3], result[3]);
+
     }
     
      @Test

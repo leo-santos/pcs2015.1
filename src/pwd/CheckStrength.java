@@ -12,11 +12,16 @@ public class CheckStrength {
 		EASY, MEDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
 	}
 
-	static final int NUM = 1;
-	private static final int SMALL_LETTER = 2;
-	private static final int CAPITAL_LETTER = 3;
-	private static final int OTHER_CHAR = 4;
-        private static final int [] LETTERS= {1,2,3,4};
+	/*
+         LETTERS TYPE NUM = 1;
+	 LETTERS TYPE SMALL_LETTER = 2;
+	 LETTERS TYPE CAPITAL_LETTER = 3;
+	 LETTERS TYPE OTHER_CHAR = 4;*/
+        static final int [] LETTERS = {1,2,3,4};
+       // static final int NUM=1;
+       // private static final int SMALL_LETTER=2;
+        //private static final int CAPITAL_LETTER=3;
+        //private static final int OTHER_CHAR=4;
 
 	/**
 	 * Simple password dictionary
@@ -32,15 +37,15 @@ public class CheckStrength {
 	 */
 	private static int checkCharacterType(char letter) {
 		if (Character.isDigit(letter)) {
-        		 return NUM;
+        		 return LETTERS[0];
         	}
         	if (Character.isUpperCase(letter)) {
-            		return CAPITAL_LETTER;
+            		return LETTERS[2];
         	}
         	if (Character.isLowerCase(letter)) {
-            		return SMALL_LETTER;
+            		return LETTERS[1];
         	}
-           	return OTHER_CHAR;
+           	return LETTERS[3];
 	}
 
 	/**
@@ -50,14 +55,16 @@ public class CheckStrength {
 	 * @param type
 	 * @return quantity of occurrence of a kind of letter
 	 */
-	static int countLetter(String passwd, int type) {
-		int count = 0;
+	static int [] countLetter(String passwd, int [] type) {
+		int [] count = {0,0,0,0};
 		if (null != passwd && passwd.length() > 0) {
-			for (char letter : passwd.toCharArray()) {
-				if (checkCharacterType(letter) == type) {
-					count++;
-				}
-			}
+			for(int i=0; i< LETTERS.length;i++){
+                            for (char letter : passwd.toCharArray()) {
+                                    if (checkCharacterType(letter) == type[i]) {
+                                            count[i]++;
+                                    }
+                            }
+                        }
 		}
 		return count;
 	}
@@ -101,19 +108,18 @@ public class CheckStrength {
 	 * @param password
 	 * @return level
 	 */
-        private static int verifyPoints( String password, int type){  
+        private static int  verifyPoints( String password, int [] type_vector ){  
             int level=0;
-            if(countLetter(password, type)>0){
-                   level++;
-               }
-            if(type==OTHER_CHAR){
-                if (countLetter(password, OTHER_CHAR) >= 3) {
-                            level++;
-                    }
-                    if (countLetter(password, OTHER_CHAR) >= 6) {
-			level++;
-                    }   
+            int [] qtd_tipo;
+            qtd_tipo=countLetter(password, type_vector);
+            for( int type : qtd_tipo){
+                if(type>0){
+                    level++;
                 }
+            }
+           
+             
+            
             return level;
         }
            /**
@@ -123,13 +129,10 @@ public class CheckStrength {
 	 * @return level
          * 
          */ 
-        private static int calculatePoints (String password){
+        private static int calculatePoints (String password, int [] type){
          int level=0,level_real=0;
             int len = password.length();
-            level+=verifyPoints(password,NUM);
-	    level+=verifyPoints(password,SMALL_LETTER);
-            level+=verifyPoints(password,CAPITAL_LETTER);
-            level+=verifyPoints(password,OTHER_CHAR);
+            level+=verifyPoints(password,type);
             level_real=level;
             if (len > 4 && level>=2) {
 			level_real++;
@@ -151,32 +154,37 @@ public class CheckStrength {
 	 * @param password
 	 * @return level
 	 */
-	private static int increasePoints(String password){
+	private static int increasePoints(String password,int []  qtd_tipo){
 	    int level =0;
-            level=calculatePoints(password);
+            level=calculatePoints(password,LETTERS);
 	    int len = password.length();
-		if (len > 6 && countLetter(password, NUM) >= 3 && countLetter(password, SMALL_LETTER) >= 3
-                || len > 6 && countLetter(password, NUM) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3
-                || len > 6 && countLetter(password, NUM) >= 3 && countLetter(password, OTHER_CHAR) >= 2
-                || len > 6 && countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, CAPITAL_LETTER) >= 3
-                || len > 6 && countLetter(password, SMALL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2
-                || len > 6 && countLetter(password, CAPITAL_LETTER) >= 3 && countLetter(password, OTHER_CHAR) >= 2) {
+            
+		if (len > 6 && (qtd_tipo[0] >= 3 || qtd_tipo[1] >= 3 || qtd_tipo[2] >= 3) && qtd_tipo[3] >= 2
+                || len > 6 && qtd_tipo[3] <= 2 && ((qtd_tipo[0] >= 3 && qtd_tipo[1] >= 3) || (qtd_tipo[0] >= 3 && qtd_tipo[2] >= 3) || (qtd_tipo[2] >= 3 && qtd_tipo[1] >= 3))) {
 			level++;
 		}
-
-		if (len > 8 && countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2 && countLetter(password, CAPITAL_LETTER) >= 2 
-                  || len > 8 && countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2
-                  || len > 8 && countLetter(password, NUM) >= 2 && countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2 
-                  || len > 8 && countLetter(password, SMALL_LETTER) >= 2	&& countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2) {
+		if (len > 8) {
+                    int count=0;
+                        for( int x : qtd_tipo){
+                            if(x>=2){
+                                count++;      
+                            }
+                        }
+                        if(count>=3){
+                            level++;
+                        }
+			
+		}
+		if (len > 10 && qtd_tipo[0] >= 2 && qtd_tipo[1] >= 2 && qtd_tipo[2] >= 2 && qtd_tipo[3] >= 2) {
 			level++;
 		}
+                if (qtd_tipo[3] >= 3) {
+                                level++;
+                           }
+                           if (qtd_tipo[3] >= 6) {
+                               level++;
+                           }   
 
-		if (len > 10 && countLetter(password, NUM) >= 2 && countLetter(password, SMALL_LETTER) >= 2
-				&& countLetter(password, CAPITAL_LETTER) >= 2 && countLetter(password, OTHER_CHAR) >= 2) {
-			level++;
-		}
-
-		
 
 		
             return level;
@@ -187,7 +195,7 @@ public class CheckStrength {
 	 * @param password
 	 * @return level
 	 */
-        private static int decreasePoints(String password){
+        private static int decreasePoints(String password, int [] qtd_tipo ){
             int len = password.length();
 		int level = 0;
       
@@ -195,8 +203,7 @@ public class CheckStrength {
 			level++;
 		}
 
-		if (countLetter(password, NUM) == len || countLetter(password, SMALL_LETTER) == len
-				|| countLetter(password, CAPITAL_LETTER) == len) {
+		if (qtd_tipo[0]== len || qtd_tipo[1] == len || qtd_tipo[2] == len) {
 			level++;
 		}
 
@@ -267,15 +274,17 @@ public class CheckStrength {
 	 * @param password
 	 * @return strength level
 	 */
-	public static int checkPasswordStrength(String password) {     
+	public static int checkPasswordStrength(String password) {  
+            int [] qtd_tipo;
+            qtd_tipo=countLetter(password, LETTERS);
 		try{ 
                     checkPasswordEmpty(password);
                 }
                 catch(Exception e){
                     logError(e);
                 }
-                int increasePoints = increasePoints(password);
-		int decreasePoints = decreasePoints(password);
+                int increasePoints = increasePoints(password, qtd_tipo);
+		int decreasePoints = decreasePoints(password, qtd_tipo);
                 if( decreasePoints <0 || increasePoints-decreasePoints<0){
                     return 0;
                 }                
